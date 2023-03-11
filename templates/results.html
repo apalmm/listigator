@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Filtered Results</title>
+  </head>
+  <body>
+    <h1>Filtered Results</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Field</th>
+          <th>City</th>
+          <th>Status</th>
+          <th>Phone</th>  
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in results %}
+        <tr>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[5] }}</td>
+            <td>{{ row[2] }}</td>
+            <td>{{ row[3] }}</td>
+            <td>{{ row[4] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>
