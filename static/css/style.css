@@ -1,6 +1,87 @@
-h1 {
-    border: 2px #eee solid;
-    color: blue;
-    text-align: center;
-    padding: 10px;
+:root {
+    --primary: #00356b;
+    --secondary: #287dc0;
+    --tertiary: #63aaff;
+    --grey: lightgrey;
+    --white:  #fff;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0rem;
+    padding: 0rem;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+header, footer, main {
+    padding: 1rem;
+    width: 100%;
+}
+
+header, footer {
+    background-color: var(--primary);
+    color: var(--white);
+}
+
+path {
+    fill: #f9f9f9;
+}
+
+path:hover {
+    fill: var(--grey);
+    transition: fill 0.3s;
+    stroke-width: 1.5;
+}
+
+select {
+    width: 100%;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    margin: 0.5rem 0rem;
+}
+
+table {
+    margin: 1rem 0rem;
+    border-collapse: collapse;
+    border: 1px solid grey;
+}
+
+th, td {
+    padding: 5px;
+    border-collapse: collapse;
+}
+
+tr {
+    border: 1px solid grey;
+}
+
+a {
+    color: inherit;
+}
+
+input {
+    width: 100%;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    margin: 0.5rem 0rem;
+}
+
+.float-left {
+    float: left;
+    width: 49%;
+}
+
+.float-right {
+    float: right;
+    width: 49%;
 }

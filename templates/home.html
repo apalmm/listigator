@@ -1,42 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
-    <title>Listigator</title>
-</head>
-<body>
-   <h1>Welcome to Listigator</h1>
-   <form method="POST" action="/results">
-    <label>Name:</label>
-    <input type="text" name="name">
-    <br>
-    <label>Field:</label>
-    <select name="field">
-      <option value="">--Any--</option>
-      <option value="Juvenile">Juvenile</option>
-      <option value="Guardianships">Guardianships</option>
-      <option value="Cannabis">Cannabis</option>
-      <option value="Civil+Rights">Civil Rights</option>
-      <option value="Criminal">Criminal</option>
-      <option value="Human+Rights">Human Rights</option>
-      <option value="Immigration+Naturaliza">Immigration and Naturalization</option>
-      <option value="Indian">Native American Law</option>
-      <option value="LGBTQ">LGBTQ</option>
-    </select>
-    <br>
-    <label>City:</label>
-    <input type="text" name="city">
-    <br>
-    <label for="nonfiction">Pro Bono:</label>
-    <input type="checkbox" name="probono" id="probono">
-    <br>
-    <label>Phone:</label>
-    <input type="text" name="phone">
-    <br>
-    <br>
-    <button type="submit">Filter</button>
-  </form>
+{% extends 'layout.html' %}
+{% block head %}
+<meta charset="utf-8">
+<link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+{% endblock %}
+{% block title %}Listigator{% endblock %}
 
-</body>
-</html>
+{% block header %}
+<h1>Listigator</h1>
+{% endblock %}
+
+{% block main %}
+<form method="POST" action="/results">
+  <label>Name:</label>
+  <input type="text" name="name">
+  <label>Field:</label>
+  <select name="field">
+    <option value="">--Any--</option>
+    <option value="Juvenile">Juvenile</option>
+    <option value="Guardianships">Guardianships</option>
+    <option value="Cannabis">Cannabis</option>
+    <option value="Civil+Rights">Civil Rights</option>
+    <option value="Criminal">Criminal</option>
+    <option value="Human+Rights">Human Rights</option>
+    <option value="Immigration+Naturaliza">Immigration and Naturalization</option>
+    <option value="Indian">Native American Law</option>
+    <option value="LGBTQ">LGBTQ</option>
+  </select>
+  <label>City:</label>
+  <input type="text" name="city">
+  <label for="nonfiction">Pro Bono:</label>
+  <input type="checkbox" name="probono" id="probono">
+  <label>Phone:</label>
+  <input type="text" name="phone">
+  <button type="submit">Filter</button>
+</form>
+{% endblock %}
