@@ -12,7 +12,7 @@
 {% block main %}
 <form method="POST" action="/results">
   <label>Name:</label>
-  <input type="text" name="name">
+    <input type="text" name="name">
   <label>Field:</label>
   <select name="field">
     <option value="">--Any--</option>
@@ -27,11 +27,11 @@
     <option value="LGBTQ">LGBTQ</option>
   </select>
   <label>City:</label>
-  <input type="text" name="city">
+    <input type="text" name="city">
   <label for="nonfiction">Pro Bono:</label>
-  <input type="checkbox" name="probono" id="probono">
+    <input type="checkbox" name="probono" id="probono">
   <label>Phone:</label>
-  <input type="text" name="phone">
+    <input type="text" name="phone">
   <button type="submit">Filter</button>
 </form>
 {% endblock %}
