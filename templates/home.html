@@ -3,24 +3,23 @@
 
 {% block main %}
 <div class="row">
-  <div class='text-center align-middle justify-content-center p-3'>
-    <h1>Washington</h1>
-    <hr>
+  <div class='text-center align-middle justify-content-center'>
+    <h1 class='p-3 border-bottom'>Washington</h1>
   </div>
 </div>
-<div class="container-fluid h-100">
-  <div class="row p-1">
+<div class="h-100 cover-container">
+  <div class="row p-2">
     <form method='post' action="/results">
-        <div class="row">
+        <div class="row m-2">
           <div class="col">
             <label for='name' class='form-label'>Name</label>
             <div class="mb-3 input-group">
-              <input type="text" placeholder="Name" class="form-control" name='name'>
+              <input id="name" type="text" placeholder="Name" class="form-control" name='name'>
             </div>
           </div>
           <div class="col">
             <label for='field' class='form-label'>Field</label>
-            <select name="field" class='form-select'>
+            <select id="field" name="field" class='form-select'>
               {% for field in field_options %}
               <option value={{field}}>{{field}}</option>
               {% endfor %}
@@ -29,28 +28,26 @@
           <div class="col">
             <label for='city' class='form-label'>City</label>
             <div class="mb-3 input-group">
-              <input type="text" placeholder="City" class="form-control" name='city'>
+              <input id="city" type="text" placeholder="City" class="form-control" name='city'>
             </div>
           </div>
           <div class="col">
             <div class="form-check mb-2">
-              <input type="checkbox" class="form-check-input">
+              <input id="probono" type="checkbox" class="form-check-input">
               <label class="form-check-label" for="pro_bono">Pro bono</label>
             </div>
           </div>
           <div class="col">
             <label for='phone' class='form-label'>Phone</label>
             <div class="mb-3 input-group">
-              <input type="text" placeholder="Phone Number" class="form-control" name='phone'>
+              <input id="phone" type="text" placeholder="Phone Number" class="form-control" name='phone'>
             </div>
           </div>
         </div>
     </form>
   </div>
-  <div class="row mt-3">
-    <div id="results" class='bg-primary overflow-auto'>
-      <h1>Hello</h1>
-    </div>
-  </div>
 <div>
+  <div class="row">
+    <div id="results" class='overflow-auto'></div>
+  </div>
 {% endblock %}

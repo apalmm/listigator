@@ -1,8 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, make_response
 from werkzeug.security import check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from models import User, List, Lawyer
-from database import db
+from database import db, get_lawyers
 from constants import field_options
 
 # create the app
@@ -33,7 +33,7 @@ def register():
     else:
         return render_template('register.html')
 
-@app.route('/login',methods = ['POST', 'GET'])
+@app.route('/login', methods = ['POST', 'GET'])
 def login():
     message = None
     if request.method == 'POST':
@@ -51,47 +51,25 @@ def login():
             
     return render_template('login.html', message=message)
 
-@app.route('/home',methods = ['POST', 'GET'])
+@app.route('/home', methods = ['POST', 'GET'])
 def home():
     return render_template('home.html', field_options=field_options)
 
-# @app.route('/results', methods=['POST'])
-# def results():
+@app.route('/search')
+def results():
+    name = request.args.get('name')
+    city = request.args.get('city')
+    phone = request.args.get('phone')
     
-#     field = request.form['field']
-#     name = request.form['name']
-#     city = request.form['city']
-#     probono = request.form.get('probono')
-#     phone = request.form['phone']
-
-#     query = "SELECT * FROM Lawyer INNER JOIN Field ON Field.LicenseNumber=Lawyer.LicenseNumber"
-#     parameters = {}
-#     conditions = []
-
-#     if field:
-#         conditions.append("Field LIKE :field")
-#         parameters['field'] = f'%{field}%'
-#     if name:
-#         conditions.append("Name LIKE :name")
-#         parameters['name'] = f'%{name}%'
-#     if city:
-#         conditions.append("City LIKE :city")
-#         parameters['city'] = f'%{city}%'
-#     if probono is not None:
-#         conditions.append("Status = 'Pro Bono'")
-#         parameters['probono'] = probono
-#     if phone:
-#         conditions.append("Phone LIKE :phone")
-#         parameters['phone'] = f'%{phone}%'
+    print(name, city, phone)
     
-#     if conditions:
-#         query += " WHERE " + " AND ".join(conditions)
+    if name == "" and city == "" and phone == "":
+        html = ""
+    else:
+        lawyers = get_lawyers(name, city, phone)
+        html = render_template('results.html', lawyers=lawyers)
 
-#     with sqlite3.connect('WALawyers.sqlite') as conn:
-#         cursor = conn.cursor()
-#         results = cursor.execute(query, parameters).fetchall()
-
-#     return render_template('results.html', results=results)
+    return make_response(html)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,31 +1,24 @@
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Filtered Results</title>
-  </head>
-  <body>
-    <h1>Filtered Results</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Field</th>
-          <th>City</th>
-          <th>Status</th>
-          <th>Phone</th>  
-        </tr>
-      </thead>
-      <tbody>
-        {% for row in results %}
-        <tr>
-            <td>{{ row[1] }}</td>
-            <td>{{ row[5] }}</td>
-            <td>{{ row[2] }}</td>
-            <td>{{ row[3] }}</td>
-            <td>{{ row[4] }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </body>
-</html>
+{% if lawyers %}
+<table class='table bg-light table-striped'>
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">City</th>
+      <th scope="col">Field</th>
+      <th scope="col">Phone</th>
+      <th scope="col">License #</th>  
+    </tr>
+  </thead>
+  <tbody>
+    {% for lawyer in lawyers %}
+    <tr>
+        <td>{{lawyer['Name']}}</td>
+        <td>{{lawyer['City']}}</td>
+        <td>{{lawyer['Field']}}</td>
+        <td>{{lawyer['Phone']}}</td>
+        <td>{{lawyer['LicenseNumber']}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
