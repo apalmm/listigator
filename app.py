@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
+from werkzeug.security import check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from models import User, List, Lawyer
 from database import db
