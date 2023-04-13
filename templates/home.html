@@ -1,37 +1,56 @@
 {% extends 'layout.html' %}
-{% block head %}
-<meta charset="utf-8">
-<link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
-{% endblock %}
 {% block title %}Listigator{% endblock %}
 
-{% block header %}
-<h1>Listigator</h1>
-{% endblock %}
-
 {% block main %}
-<form method="POST" action="/results">
-  <label>Name:</label>
-    <input type="text" name="name">
-  <label>Field:</label>
-  <select name="field">
-    <option value="">--Any--</option>
-    <option value="Juvenile">Juvenile</option>
-    <option value="Guardianships">Guardianships</option>
-    <option value="Cannabis">Cannabis</option>
-    <option value="Civil+Rights">Civil Rights</option>
-    <option value="Criminal">Criminal</option>
-    <option value="Human+Rights">Human Rights</option>
-    <option value="Immigration+Naturaliza">Immigration and Naturalization</option>
-    <option value="Indian">Native American Law</option>
-    <option value="LGBTQ">LGBTQ</option>
-  </select>
-  <label>City:</label>
-    <input type="text" name="city">
-  <label for="nonfiction">Pro Bono:</label>
-    <input type="checkbox" name="probono" id="probono">
-  <label>Phone:</label>
-    <input type="text" name="phone">
-  <button type="submit">Filter</button>
-</form>
+<div class="row">
+  <div class='text-center align-middle justify-content-center p-3'>
+    <h1>Washington</h1>
+    <hr>
+  </div>
+</div>
+<div class="container-fluid h-100">
+  <div class="row p-1">
+    <form method='post' action="/results">
+        <div class="row">
+          <div class="col">
+            <label for='name' class='form-label'>Name</label>
+            <div class="mb-3 input-group">
+              <input type="text" placeholder="Name" class="form-control" name='name'>
+            </div>
+          </div>
+          <div class="col">
+            <label for='field' class='form-label'>Field</label>
+            <select name="field" class='form-select'>
+              {% for field in field_options %}
+              <option value={{field}}>{{field}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="col">
+            <label for='city' class='form-label'>City</label>
+            <div class="mb-3 input-group">
+              <input type="text" placeholder="City" class="form-control" name='city'>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-check mb-2">
+              <input type="checkbox" class="form-check-input">
+              <label class="form-check-label" for="pro_bono">Pro bono</label>
+            </div>
+          </div>
+          <div class="col">
+            <label for='phone' class='form-label'>Phone</label>
+            <div class="mb-3 input-group">
+              <input type="text" placeholder="Phone Number" class="form-control" name='phone'>
+            </div>
+          </div>
+        </div>
+    </form>
+  </div>
+  <div class="row mt-3">
+    <div id="results" class='bg-primary overflow-auto'>
+      <h1>Hello</h1>
+    </div>
+  </div>
+<div>
 {% endblock %}

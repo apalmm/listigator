@@ -3,6 +3,7 @@ from werkzeug.security import check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from models import User, List, Lawyer
 from database import db
+from constants import field_options
 
 # create the app
 app = Flask(__name__)
@@ -52,10 +53,11 @@ def login():
 
 @app.route('/home',methods = ['POST', 'GET'])
 def home():
-    return render_template('home.html')
+    return render_template('home.html', field_options=field_options)
 
 # @app.route('/results', methods=['POST'])
 # def results():
+    
 #     field = request.form['field']
 #     name = request.form['name']
 #     city = request.form['city']
