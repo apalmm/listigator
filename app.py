@@ -21,17 +21,28 @@ def index():
 
 @app.route('/register',methods = ['POST', 'GET'])
 def register():
+    message = None
     if request.method == 'POST':
         username = request.form['username']
-        if (request.form['password'] == request.form['confirm_password']):
-            user = User(username, request.form['password'])
-            db.session.add(user)
-            db.session.commit()
-            return redirect(url_for('login'))
+        password = request.form['password']
+        confirm_password = request.form['confirm_password']
         
-        return redirect(url_for('login'))
+        if username and password and confirm_password:
+            if (password == confirm_password):
+                user = User(username, password)
+                db.session.add(user)
+                db.session.commit()
+                return redirect(url_for('login'))
+            else:
+                message = 'Invalid register information.'
+        else:
+            message = 'Missing register information.'
+            return render_template('register.html', message=message)
+        
+        return render_template('register.html', message=message)
     else:
-        return render_template('register.html')
+        return render_template('register.html', message=message)
+
 
 @app.route('/login', methods = ['POST', 'GET'])
 def login():
@@ -60,13 +71,14 @@ def results():
     name = request.args.get('name')
     city = request.args.get('city')
     phone = request.args.get('phone')
+    field = request.args.get('field')
     
-    print(name, city, phone)
+    print(name, city, phone, field)
     
     if name == "" and city == "" and phone == "":
         html = ""
     else:
-        lawyers = get_lawyers(name, city, phone)
+        lawyers = get_lawyers(name, city, phone, field)
         html = render_template('results.html', lawyers=lawyers)
 
     return make_response(html)

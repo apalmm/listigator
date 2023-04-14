@@ -2,9 +2,8 @@ function updateInput()
 {
     $("#name").on("keyup", updateResults);
     $("#city").on("keyup", updateResults);
+    $("#field").on("change", updateResults);
     $("#phone").on("keyup", updateResults);
-
-    console.log('hello');
     // $("#probono").on("change", updateResults);
 }
 
@@ -13,15 +12,18 @@ function updateResults()
     let name = $("#name").val();
     let city = $("#city").val();
     let phone = $("#phone").val();
+    let field = $("#field").val();
 
-    let probono = $("#probono").val(); 
+    if (field == '--Any--') {
+        field = ''
+    }
 
-    console.log(probono);
     //encodeURIComponent searchPrefix
 
-    let url = "/search?name=" + name + "&" + "city=" + city +"&" + "phone=" + phone; //add on to flash route the prefix (aka whatever is in the search Prefix)
+    let url = "/search?name=" + name + "&" + "city=" + city + "&" + "phone=" + phone + "&" + "field=" + field //add on to flash route the prefix (aka whatever is in the search Prefix)
 
     console.log(url)
+
     request = $.ajax({
         type: "GET", //get request
         url: url,

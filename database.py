@@ -28,7 +28,7 @@ def query_database(query, mapping=None, many=True):
 
 # PUBLIC INTERFACE
 
-def get_lawyers(name, city, phone, probono=False, field='Juvenile'):
+def get_lawyers(name, city, phone, field, probono=False):
     query = "SELECT * FROM Lawyer INNER JOIN Field ON Field.LicenseNumber = Lawyer.LicenseNumber"
     
     parameters = {}
@@ -52,6 +52,8 @@ def get_lawyers(name, city, phone, probono=False, field='Juvenile'):
     
     if conditions:
         query += " WHERE " + " AND ".join(conditions)
+        
+    query += " LIMIT 250 "
         
     print(query, parameters)
         
