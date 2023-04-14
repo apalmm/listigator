@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, make_response
+from flask import Flask, render_template, request, redirect, url_for, make_response, jsonify
 from werkzeug.security import check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from models import User, List, Lawyer
@@ -19,7 +19,7 @@ def index():
     """Displays search form and results table"""
     return redirect('login')
 
-@app.route('/register',methods = ['POST', 'GET'])
+@app.route('/register', methods=['POST', 'GET'])
 def register():
     message = None
     if request.method == 'POST':
@@ -44,7 +44,7 @@ def register():
         return render_template('register.html', message=message)
 
 
-@app.route('/login', methods = ['POST', 'GET'])
+@app.route('/login', methods=['POST', 'GET'])
 def login():
     message = None
     if request.method == 'POST':
@@ -62,7 +62,7 @@ def login():
             
     return render_template('login.html', message=message)
 
-@app.route('/home', methods = ['POST', 'GET'])
+@app.route('/home', methods=['POST', 'GET'])
 def home():
     return render_template('home.html', field_options=field_options)
 
@@ -82,6 +82,15 @@ def results():
         html = render_template('results.html', lawyers=lawyers)
 
     return make_response(html)
+
+@app.route('/create', methods=['POST'])
+def create():
+    content_type = request.headers.get('Content-Type')
+    if (content_type == 'application/json'):
+        json = request.json
+        return json
+    else:
+        return 'Content-Type not supported!'
 
 if __name__ == '__main__':
     app.run(debug=True)

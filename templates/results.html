@@ -12,11 +12,14 @@
   <tbody>
     {% for lawyer in lawyers %}
     <tr>
-        <td>{{lawyer['Name']}}</td>
-        <td>{{lawyer['City']}}</td>
-        <td>{{lawyer['Field']}}</td>
-        <td>{{lawyer['Phone']}}</td>
-        <td>{{lawyer['LicenseNumber']}}</td>
+        <td class='name'>{{lawyer['Name']}}</td>
+        <td class='city'>{{lawyer['City']}}</td>
+        <td class='field'>{{lawyer['Field']}}</td>
+        <td class='phone'>{{lawyer['Phone']}}</td>
+        <td class='license-no'>{{lawyer['LicenseNumber']}}</td>
+        <td class='pr-3' style="max-width: 60px"> 
+          <button type='button' class='lawyer-add-button btn btn-outline-primary pr-4'>Add</button>
+        </td>
     </tr>
     {% endfor %}
   </tbody>
