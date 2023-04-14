@@ -1,9 +1,20 @@
+
 function updateInput()
 {
+    let list_div = document.getElementById('list-content');
+
     $("#name").on("keyup", updateResults);
     $("#city").on("keyup", updateResults);
     $("#field").on("change", updateResults);
     $("#phone").on("keyup", updateResults);
+
+    document.getElementById('new-list-button').addEventListener('click', () => {
+        if (list_div.style.display === 'none') {
+            list_div.style.display = 'block';
+        } else {
+            list_div.style.display = 'none'
+        }
+    })
     // $("#probono").on("change", updateResults);
 }
 
@@ -35,7 +46,6 @@ function updateResults()
 
 function setup()
 {
-    console.log('setup');
     updateInput();
 }
 
