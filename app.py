@@ -1,18 +1,30 @@
-from flask import Flask, render_template, request, redirect, url_for, make_response, jsonify
+from flask import Flask, render_template, request, session, redirect, url_for, make_response
 from werkzeug.security import check_password_hash
-from flask_sqlalchemy import SQLAlchemy
 from models import User, List, Lawyer
 from database import db, get_lawyers
 from constants import field_options
+import functools
 
 # create the app
 app = Flask(__name__)
 
+app.config.from_mapping(SECRET_KEY='dev', SQLALCHEMY_DATABASE_URI='sqlite:///listigator.sqlite3')
 # configure the SQLite database, relative to the app instance folder
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///listigator.sqlite3"
+# app.config["SQLALCHEMY_DATABASE_URI"] =
 
 # initialize the app with the extension
 db.init_app(app)
+
+def login_required(route):
+    @functools.wraps(route)
+    def wrapped_route(**kwargs):
+
+        if session.get('user_id') is None:
+            return redirect(url_for('login'))
+
+        return route(**kwargs)
+
+    return wrapped_route
 
 @app.route('/', methods=['GET'])
 def index():
@@ -30,8 +42,10 @@ def register():
         if username and password and confirm_password:
             if (password == confirm_password):
                 user = User(username, password)
+                
                 db.session.add(user)
                 db.session.commit()
+
                 return redirect(url_for('login'))
             else:
                 message = 'Invalid register information.'
@@ -39,9 +53,7 @@ def register():
             message = 'Missing register information.'
             return render_template('register.html', message=message)
         
-        return render_template('register.html', message=message)
-    else:
-        return render_template('register.html', message=message)
+    return render_template('register.html', message=message)
 
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -53,7 +65,11 @@ def login():
         
         if username and password:
             user = User.query.filter_by(username=username).first()
+            
             if user and check_password_hash(user.password_hash, request.form['password']):
+                session.clear()
+                session['user_id'] = user.id
+                
                 return redirect(url_for('home'))
             else:
                 message = 'Invalid login information.'
@@ -62,6 +78,7 @@ def login():
             
     return render_template('login.html', message=message)
 
+@login_required
 @app.route('/home', methods=['POST', 'GET'])
 def home():
     return render_template('home.html', field_options=field_options)
@@ -87,8 +104,23 @@ def results():
 def create():
     content_type = request.headers.get('Content-Type')
     if (content_type == 'application/json'):
-        json = request.json
-        return json
+        lawyers = request.json
+        
+        user_id = session.get('user_id')
+        
+        list = List('Dummy_Title')
+        user = User.query.get(user_id)
+        
+        user.lists.append(list)
+        
+        for lawyer in lawyers:
+            lawyer = Lawyer(lawyer['city'], lawyer['field'], lawyer['license'], lawyer['name'], lawyer['phone'], 'blah')
+            list.lawyers.append(lawyer)
+        
+        db.session.add(list)
+        db.session.commit()
+        
+        return lawyers
     else:
         return 'Content-Type not supported!'
 

@@ -20,11 +20,13 @@ function updateInput()
     document.getElementById('create-list-btn').addEventListener('click', () => {
         console.log('hi');
         if (list_data.length > 0) {
+            console.log(JSON.stringify(list_data))
             let url = "/create";
             request = $.ajax({
                 type: "POST",
                 url: url,
                 data: JSON.stringify(list_data),
+                contentType: "application/json",
                 success: (response) => {
                     console.log(response)
                 },

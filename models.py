@@ -59,6 +59,9 @@ class List(db.Model):
     lawyers = db.relationship('Lawyer', secondary=list_lawyers, lazy='subquery',
         backref=db.backref('lists', lazy=True))
     
+    def __init__(self, title):
+        self.title = title
+        
     def __repr__(self):
         return "<List(title='%s')>" % self.title
 
@@ -76,6 +79,14 @@ class Lawyer(db.Model):
     phone = db.Column(db.String(20), nullable=False)
     
     field = db.Column(db.String(20), nullable=False)
+    
+    def __init__(self, city, field, license_number, name, phone, status):
+        self.license_number = license_number
+        self.name = name
+        self.city = city
+        self.phone = phone
+        self.field = field
+        self.status = status
     
     def __repr__(self):
         return "<Lawyer(name='%s', city='%s', status='%s', phone='%s')>" % (
