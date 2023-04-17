@@ -28,7 +28,7 @@ def register():
         else:
             message = 'Missing register information.'
         
-    return render_template('register.html', message=message)
+    return render_template('auth/register.html', message=message)
 
 
 @auth.route('/login', methods=['POST', 'GET'])

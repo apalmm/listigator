@@ -2,7 +2,7 @@
 {% block content %}
 <h2>Register</h2>
 <hr>
-<form action="{{url_for('register')}}" method="post">
+<form action="{{url_for('auth.register')}}" method="post">
     <div class="mb-3">
       <label for="username" class="form-label">Username</label>
       <input type="username" placeholder="Username" class="form-control" name="username" required>

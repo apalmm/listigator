@@ -24,7 +24,7 @@ function updateInput()
         list_data.push(title)
 
         console.log(list_data)
-        if (list_data.length > 0) {
+        if (list_data.length > 0 && title) {
             let url = "/create";
             request = $.ajax({
                 type: "POST",
