@@ -5,7 +5,9 @@ module that runs the server hosting the Flask application
 import sys
 import argparse
 
-from app import app
+from __init__ import up_app
+
+app = up_app()
 
 def parse_args() -> dict:
     """Parse CLI arguments"""

@@ -1,8 +1,8 @@
-{% extends 'loginlayout.html' %}
+{% extends 'auth/loginlayout.html' %}
 {% block content %}
 <h2>Listigator</h2>
 <hr>
-<form class="row g-3" action="{{url_for('login')}}" method="post">
+<form class="row g-3" action="{{url_for('auth.login')}}" method="post">
     <div>
     <label for="username" class="form-label">Username</label>
     <div class="input-group">
@@ -18,7 +18,7 @@
     {% if message %}
     <p class='text-danger'>{{message}}</p>
     {% endif %}
-    <a href="{{url_for('register')}}" class="btn btn-secondary" role="button">Create User</a>
+    <a href="{{url_for('auth.register')}}" class="btn btn-secondary" role="button">Create User</a>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 {% endblock %}
