@@ -53,8 +53,8 @@
       </div>
     </div>
   </div>
-  <div id='list-content' style="display: none; max-height: 80vh" class='col-4 bg-secondary overflow-auto'>
-          <div style="max-height: 90vh;" class="p-4 input-group-lg overflow-auto">
+  <div id='list-content' style="display: none; max-height: 80vh" class='col-4 bg-light overflow-auto'>
+          <div style="min-height: 80vh; max-height: 80vh;" class="bg-light p-3 input-group-lg overflow-auto">
               <input id="list-title" type="text" placeholder="Title" class="form-control" name='list-title' required>
               <table class='table ph-3 bg-light mt-4 rounded'>
                 <tr>
@@ -67,8 +67,8 @@
                 <tbody id="lawyers-table-content">
                 </tbody>
               </table>
+              <button id="create-list-btn" type="submit" class="p-2 btn btn-primary w-100">Create</button>
             </div>
-            <button id="create-list-btn" type="submit" class="btn btn-primary">Create</button>
         </div>
 </div>
 {% endblock %}

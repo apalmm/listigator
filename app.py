@@ -20,6 +20,7 @@ def home():
     return render_template('main/home.html', field_options=field_options)
 
 @main.route('/search')
+@login_required
 def results():
     name = request.args.get('name')
     city = request.args.get('city')
@@ -37,6 +38,7 @@ def results():
     return make_response(html)
 
 @main.route('/create', methods=['POST'])
+@login_required
 def create():
     content_type = request.headers.get('Content-Type')
     if (content_type == 'application/json'):
@@ -63,5 +65,6 @@ def create():
         return 'Content-Type not supported!'
 
 @main.route('/mylists')
+@login_required
 def mylists():
     return render_template('main/mylists.html')

@@ -53,6 +53,11 @@ def login():
             
     return render_template('auth/login.html', message=message)
 
+@auth.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('index'))
+
 def login_required(route):
     @functools.wraps(route)
     def wrapped_route(**kwargs):
