@@ -1,4 +1,4 @@
-let list_data = [];
+let list_data = [[]];
 
 function updateInput()
 {
@@ -18,9 +18,13 @@ function updateInput()
     })
 
     document.getElementById('create-list-btn').addEventListener('click', () => {
-        console.log('hi');
+        const title = document.getElementById('list-title').value;
+
+        //give our list a title
+        list_data.push(title)
+
+        console.log(list_data)
         if (list_data.length > 0) {
-            console.log(JSON.stringify(list_data))
             let url = "/create";
             request = $.ajax({
                 type: "POST",
@@ -33,6 +37,19 @@ function updateInput()
 
             });
         }
+
+        //clear the list
+
+        list_data = [[]]
+
+        //clear the DOM node
+
+        const myNode = document.getElementById("lawyers-table-content");
+        while (myNode.firstChild) {
+            myNode.removeChild(myNode.lastChild);
+        }
+
+        document.getElementById('list-title').value = ''
     })
 }
 
@@ -69,9 +86,8 @@ function setUpTable()
             td.textContent = vals[i]
         }
 
-        list_data.push(obj);
+        list_data[0].push(obj);
 
-        console.log(list_data);
         document.getElementById('lawyers-table-content').appendChild(tr);
     }
 

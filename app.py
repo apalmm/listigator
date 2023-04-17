@@ -44,12 +44,12 @@ def create():
         
         user_id = session.get('user_id')
         
-        list = List('Dummy_Title')
+        list = List(lawyers[1])
         user = User.query.get(user_id)
         
         user.lists.append(list)
         
-        for lawyer in lawyers:
+        for lawyer in lawyers[0]:
             lawyer = Lawyer(lawyer['city'], lawyer['field'], lawyer['license'], lawyer['name'], lawyer['phone'], 'blah')
             list.lawyers.append(lawyer)
         
@@ -59,3 +59,7 @@ def create():
         return lawyers
     else:
         return 'Content-Type not supported!'
+
+@main.route('/mylists')
+def mylists():
+    return render_template('main/mylists.html')
