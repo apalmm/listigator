@@ -50,7 +50,9 @@ def create():
         user.lists.append(list)
         
         for lawyer in lawyers[0]:
-            lawyer = Lawyer(lawyer['city'], lawyer['field'], lawyer['license'], lawyer['name'], lawyer['phone'], 'blah')
+            lawyer = Lawyer(lawyer['city'], lawyer['field'], lawyer['license'], 
+                            lawyer['name'], lawyer['phone'], 'blah')
+            
             list.lawyers.append(lawyer)
         
         db.session.add(list)
