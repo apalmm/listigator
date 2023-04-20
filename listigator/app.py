@@ -50,7 +50,11 @@ def create():
         
         user.lists.append(list)
 
-        list.public = lawyers[2].get('public', False)
+        public = False
+        if request.form.get('public') == 'on':
+            public = True
+        list.public = public
+
         for lawyer in lawyers[0]:
             lawyer = Lawyer(lawyer['city'], lawyer['field'], lawyer['license'], 
                             lawyer['name'], lawyer['phone'], 'blah')
@@ -75,5 +79,5 @@ def mylists():
 @main.route('/publiclists')
 @login_required
 def publiclists():
-    public_lists = List.query.filter_by(is_public=True).all()
+    public_lists = List.query.filter_by(public=True).all()
     return render_template('main/publiclists.html', lists=public_lists)

@@ -55,7 +55,12 @@
   </div>
   <div id='list-content' style="display: none; max-height: 80vh" class='col-4 bg-light overflow-auto'>
   <div style="min-height: 80vh; max-height: 80vh;" class="bg-light p-3 input-group-lg overflow-auto">
+    <form id="create-list-form" method='post' action="/create">
       <input id="list-title" type="text" placeholder="Title" class="form-control" name='list-title' required>
+      <div class="form-check">
+        <input id="public" type="checkbox" class="form-check-input" name="public">
+        <label class="form-check-label" for="public">Public</label>
+      </div>
       <table class='table bg-light mt-4 rounded'>
         <tr>
           <th scope="col">Name</th>
@@ -68,6 +73,7 @@
         </tbody>
       </table>
       <button id="create-list-btn" type="submit" class="p-2 btn btn-primary w-100">Create</button>
+    </form>
     </div>
 </div>
 </div>
