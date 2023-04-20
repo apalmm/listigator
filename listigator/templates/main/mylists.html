@@ -1,4 +1,18 @@
 {% extends 'main/layout.html' %}
 {% block title %}My Lists{% endblock %}
 
+{% block content %}
 <h1>My Lists</h1>
+<u1>
+{% for list in lists %}
+    <li>
+        {{ list.name }}
+        {% if list.public %}
+            <span style="color: green">Public</span>
+        {% else %}
+            <span style="color: red">Private</span>
+        {% endif %}
+    </li>
+{% endfor %}
+</u1>
+{% endblock %}

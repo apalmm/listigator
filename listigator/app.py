@@ -49,7 +49,8 @@ def create():
         user = User.query.get(user_id)
         
         user.lists.append(list)
-        
+
+        list.public = lawyers[2].get('public', False)
         for lawyer in lawyers[0]:
             lawyer = Lawyer(lawyer['city'], lawyer['field'], lawyer['license'], 
                             lawyer['name'], lawyer['phone'], 'blah')
@@ -66,4 +67,13 @@ def create():
 @main.route('/mylists')
 @login_required
 def mylists():
-    return render_template('main/mylists.html')
+    user_id = session.get('user_id')
+    user_id = User.query.get(user_id)
+    lists = user_id.lists
+    return render_template('main/mylists.html', lists=lists)
+
+@main.route('/publiclists')
+@login_required
+def publiclists():
+    public_lists = List.query.filter_by(is_public=True).all()
+    return render_template('main/publiclists.html', lists=public_lists)

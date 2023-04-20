@@ -1,0 +1,11 @@
+{% extends 'main/layout.html' %}
+{% block title %}Public Lists{% endblock %}
+
+{% block content %}
+<h1>Public Lists</h1>
+<u1>
+{% for list in lists %}
+ <li>{{ list.name }}</li>
+{% endfor %}
+</u1>
+{% endblock %}

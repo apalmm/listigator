@@ -6,7 +6,7 @@ from sqlite3 import Row, connect, DatabaseError
 # create the extension
 db = SQLAlchemy()
 
-DB_URL = "file:WAlawyers.sqlite?mode=ro"
+DB_URL = "file:WALawyers.sqlite?mode=ro"
 
 def query_database(query, mapping=None, many=True):
     """Query the database with the given query and mapping
