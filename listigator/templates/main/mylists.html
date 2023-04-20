@@ -3,16 +3,26 @@
 
 {% block main %}
 <h1>My Lists</h1>
-<u1>
-{% for list in lists %}
-    <li>
-        {{ list.name }}
-        {% if list.public %}
-            <span style="color: green">Public</span>
-        {% else %}
-            <span style="color: red">Private</span>
-        {% endif %}
-    </li>
-{% endfor %}
-</u1>
+{% if lists %}
+    <u1>
+        {% for list in lists %}
+            <li>{{ list.name }}</li>
+            {% if list.public %}
+                <span style="color: green">Public</span>
+            {% else %}
+                <span style="color: red">Private</span>
+            {% endif %}
+            <ul>
+                {% for lawyer in list.lawyers %}
+                    <li>{{ lawyer.name }}</li>
+                    <li>{{ lawyer.city }}</li>
+                    <li>{{ lawyer.field }}</li>
+                    <li>{{ lawyer.phone }}</li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </u1>
+{% else %}
+    <p>You have no lists yet.</p>
+{% endif %}
 {% endblock %}

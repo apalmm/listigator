@@ -3,9 +3,21 @@
 
 {% block main %}
 <h1>Public Lists</h1>
-<u1>
-{% for list in lists %}
- <li>{{ list.name }}</li>
-{% endfor %}
-</u1>
+{% if lists %}
+    <u1>
+        {% for list in lists %}
+            <li>{{ list.name }}</li>
+            <ul>
+                {% for lawyer in list.lawyers %}
+                    <li>{{ lawyer.name }}</li>
+                    <li>{{ lawyer.city }}</li>
+                    <li>{{ lawyer.field }}</li>
+                    <li>{{ lawyer.phone }}</li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </u1>
+{% else %}
+    <p>You have no lists yet.</p>
+{% endif %}
 {% endblock %}
