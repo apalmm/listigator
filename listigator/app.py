@@ -41,30 +41,35 @@ def results():
 def create():
     content_type = request.headers.get('Content-Type')
     if (content_type == 'application/json'):
-        lawyers = request.json
-        
+        data = request.json
+        print(data)
+        lawyers = data[0]
+
+        title = data[1]
+
+        is_public = data[2]
+
+
         user_id = session.get('user_id')
-        
-        list = List(lawyers[1])
         user = User.query.get(user_id)
         
+        list = List(title=title)
+        list.public = is_public
         user.lists.append(list)
 
-        public = False
-        if request.form.get('public') == 'on':
-            public = True
-        list.public = public
-
-        for lawyer in lawyers[0]:
-            lawyer = Lawyer(lawyer['city'], lawyer['field'], lawyer['license'], 
-                            lawyer['name'], lawyer['phone'], 'blah')
+        for lawyer in lawyers:
+            lawyer = Lawyer(lawyer['name'], lawyer['city'], lawyer['field'], 
+                            lawyer['phone'], lawyer['license'], lawyer['status'])
             
             list.lawyers.append(lawyer)
         
+        print("Made it to the db.session.add(list) line")
         db.session.add(list)
+        print("Made it to the db.session.commit() line")
         db.session.commit()
+        print("Made it PAST the db.session.commit() line")
         
-        return lawyers
+        return data
     else:
         return 'Content-Type not supported!'
 
@@ -72,8 +77,8 @@ def create():
 @login_required
 def mylists():
     user_id = session.get('user_id')
-    user_id = User.query.get(user_id)
-    lists = user_id.lists
+    user = User.query.get(user_id)
+    lists = user.lists
     return render_template('main/mylists.html', lists=lists)
 
 @main.route('/publiclists')

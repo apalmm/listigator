@@ -8,6 +8,7 @@ function updateInput()
     $("#city").on("keyup", updateResults);
     $("#field").on("change", updateResults);
     $("#phone").on("keyup", updateResults);
+    $("#status").on("change", updateResults);
 
     document.getElementById('new-list-btn').addEventListener('click', () => {
         if (list_div.style.display === 'none') {
@@ -19,10 +20,12 @@ function updateInput()
 
     document.getElementById('create-list-btn').addEventListener('click', () => {
         const title = document.getElementById('list-title').value;
+        const is_public = document.getElementById('public').checked
         if (list_data.length > 0 && title) {
             //give our list a title
             list_data.push(title)
-            
+            list_data.push(is_public)
+
             let url = "/create";
             request = $.ajax({
                 type: "POST",
@@ -64,6 +67,7 @@ function setUpTable()
         var field = parent.children(".field").text();
         var phone = parent.children(".phone").text();
         var license = parent.children(".license-no").text();
+        var status = parent.children(".status").text()
 
         const vals = [name, city, field, phone, license];
 
@@ -73,6 +77,7 @@ function setUpTable()
             field: field,
             phone: phone,
             license: license,
+            status: status,
         }
 
         const tr = document.createElement('tr');
