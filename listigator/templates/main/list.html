@@ -2,30 +2,32 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block main %}
-<h1>{{ title }}</h1>
+<h1 class="p-3">{{ title }}</h1>
 {% if lawyers %}
-<table class='table ph-3 bg-light table-striped'>
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">City</th>
-            <th scope="col">Field</th>
-            <th scope="col">Phone</th>
-            <th scope="col">License #</th> 
-        </tr>
-    </thead>
-    <tbody>
-        {% for lawyer in lawyers %}
-        <tr class='p-3'>
-            <td class='city'>{{lawyer.city}}</td>
-            <td class='field'>{{lawyer.field}}</td>
-            <td class='license_number'>{{lawyer.license_number}}</td>
-            <td class='name'>{{lawyer.name}}</td>
-            <td class='phone'>{{lawyer.phone}}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="container-fluid">
+    <table class='table ph-3 bg-light table-striped'>
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">City</th>
+                <th scope="col">Field</th>
+                <th scope="col">Phone</th>
+                <th scope="col">License #</th> 
+            </tr>
+        </thead>
+        <tbody>
+            {% for lawyer in lawyers %}
+            <tr class='p-3'>
+                <td class='city'>{{lawyer.city}}</td>
+                <td class='field'>{{lawyer.field}}</td>
+                <td class='license_number'>{{lawyer.license_number}}</td>
+                <td class='name'>{{lawyer.name}}</td>
+                <td class='phone'>{{lawyer.phone}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% else %}
     <p>This list is empty</p>
 {% endif %}

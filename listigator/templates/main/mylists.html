@@ -2,40 +2,42 @@
 {% block title %}My Lists{% endblock %}
 
 {% block main %}
-<h1>My Lists</h1>
+<h1 class='p-3'>My Lists</h1>
 
 {% if lists %}
-<table class='table ph-3 bg-light table-striped'>
-    <thead>
-        <tr>
-            <th scope="col">List Name</th>
-            <th scope="col">Status</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for list in lists %}
-            <tr class='p-3'>
-                <td class='name'><a href="/list/{{ list.id }}">{{ list.title }}</a></td>
-                {% if list.public %}
-                <td style="color: green">Public</td>
-                {% else %}
-                <td style="color: red">Private</td>
-                {% endif %}
-                <td class='pr-3' style="max-width: 60px">
-                    <form method="GET" action="/delete/{{ list.id }}">
-                        <input type="submit" value="Delete">
-                    </form>
-                </td>
+<div class="container-fluid">
+    <table class='table ph-3 bg-light table-striped'>
+        <thead>
+            <tr>
+                <th scope="col">List Name</th>
+                <th scope="col">Status</th>
             </tr>
-                
-            <tr class='p-3'>
-                
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            {% for list in lists %}
+                <tr class='align-middle me-auto p-3'>
+                    <td class='name'><a href="/list/{{ list.id }}">{{ list.title }}</a></td>
+                    {% if list.public %}
+                    <td style="color: green">Public</td>
+                    {% else %}
+                    <td style="color: red">Private</td>
+                    {% endif %}
+                    <td class='pr-3' style="max-width: 60px">
+                        <form class=method="GET" action="/delete/{{ list.id }}">
+                            <input class="float-right btn btn-danger" type="submit" value="Delete">
+                        </form>
+                    </td>
+                </tr>
+                    
+                <tr class='p-3'>
+                    
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% else %}
-    <p>You have no lists yet.</p>
+    <h3 class="p-3 text-danger">You have no lists yet.</h3>
 {% endif %}
 
 {% endblock %}
