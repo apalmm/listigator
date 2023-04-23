@@ -4,19 +4,22 @@
 {% block main %}
 <h1>Public Lists</h1>
 {% if lists %}
-    <u1>
+<table class='table ph-3 bg-light table-striped'>
+    <thead>
+        <tr>
+          <th scope="col">List Name</th>
+          <th scope="col">User</th>
+        </tr>
+    </thead>
+    <tbody>
         {% for list in lists %}
-            <li>{{ list.name }}</li>
-            <ul>
-                {% for lawyer in list.lawyers %}
-                    <li>{{ lawyer.name }}</li>
-                    <li>{{ lawyer.city }}</li>
-                    <li>{{ lawyer.field }}</li>
-                    <li>{{ lawyer.phone }}</li>
-                {% endfor %}
-            </ul>
+            <tr class='p-3'>
+                <td class='name'><a href="/list/{{ list.id }}">{{ list.title }}</a></td>
+                <td class='user'>{{ list.user.username }}</td>
+            </tr>
         {% endfor %}
-    </u1>
+    </tbody>
+</table>
 {% else %}
     <p>You have no lists yet.</p>
 {% endif %}

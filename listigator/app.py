@@ -63,11 +63,11 @@ def create():
             
             list.lawyers.append(lawyer)
         
-        print("Made it to the db.session.add(list) line")
+        
         db.session.add(list)
-        print("Made it to the db.session.commit() line")
+        
         db.session.commit()
-        print("Made it PAST the db.session.commit() line")
+        
         
         return data
     else:
@@ -84,5 +84,27 @@ def mylists():
 @main.route('/publiclists')
 @login_required
 def publiclists():
-    public_lists = List.query.filter_by(public=True).all()
+    public_lists = List.query.filter_by(public=True).join(User, List.user_id == User.id).all()
     return render_template('main/publiclists.html', lists=public_lists)
+
+@main.route('/delete/<int:list_id>')
+@login_required
+def delete(list_id):
+    list_to_delete = List.query.get_or_404(list_id)
+    try:
+        db.session.delete(list_to_delete)
+        db.session.commit()
+        return redirect('/mylists')
+    except:
+        return "There was a problem deleting this list"
+
+@main.route('/list/<int:list_id>')
+@login_required
+def list(list_id):
+    list_to_show = List.query.get(list_id)
+    lawyers = list_to_show.lawyers
+    title = list_to_show.title
+    print(title)
+    return render_template('main/list.html', lawyers = lawyers, title=title)
+
+        

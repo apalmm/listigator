@@ -120,6 +120,7 @@ function updateResults()
     });
 }
 
+
 function setup()
 {
     updateInput();
