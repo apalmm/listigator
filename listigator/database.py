@@ -28,7 +28,7 @@ def query_database(query, mapping=None, many=True):
 
 # PUBLIC INTERFACE
 
-def get_lawyers(name, city, phone, field, probono=False):
+def get_lawyers(name, city, phone, field, probono):
     query = "SELECT * FROM Lawyer INNER JOIN Field ON Field.LicenseNumber = Lawyer.LicenseNumber"
     
     parameters = {}

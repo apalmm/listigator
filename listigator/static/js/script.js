@@ -69,7 +69,7 @@ function setUpTable()
         var license = parent.children(".license-no").text();
         var status = parent.children(".status").text()
 
-        const vals = [name, city, field, phone, license];
+        const vals = [name, city, field, phone, license, status];
 
         const obj = {
             name: name,
@@ -101,6 +101,7 @@ function updateResults()
     let city = $("#city").val();
     let phone = $("#phone").val();
     let field = $("#field").val();
+    let status= $("#status").val();
 
     if (field == '--Any--') {
         field = ''
@@ -108,7 +109,7 @@ function updateResults()
 
     //encodeURIComponent searchPrefix
 
-    let url = "/search?name=" + name + "&" + "city=" + city + "&" + "phone=" + phone + "&" + "field=" + field; //add on to flash route the prefix (aka whatever is in the search Prefix)
+    let url = "/search?name=" + name + "&" + "city=" + city + "&" + "phone=" + phone + "&" + "field=" + field  + "&" + "status="; //add on to flash route the prefix (aka whatever is in the search Prefix)
 
     request = $.ajax({
         type: "GET", //get request

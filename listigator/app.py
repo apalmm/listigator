@@ -25,13 +25,14 @@ def results():
     city = request.args.get('city')
     phone = request.args.get('phone')
     field = request.args.get('field')
+    probono = request.form.get('status')
     
-    print(name, city, phone, field)
+    print(name, city, phone, field, probono)
     
-    if name == "" and city == "" and phone == "":
+    if name == "" and city == "" and phone == "" and field == "":
         html = ""
     else:
-        lawyers = get_lawyers(name, city, phone, field)
+        lawyers = get_lawyers(name, city, phone, field, probono)
         html = render_template('main/results.html', lawyers=lawyers)
 
     return make_response(html)
@@ -104,7 +105,6 @@ def list(list_id):
     list_to_show = List.query.get(list_id)
     lawyers = list_to_show.lawyers
     title = list_to_show.title
-    print(title)
     return render_template('main/list.html', lawyers = lawyers, title=title)
 
         
