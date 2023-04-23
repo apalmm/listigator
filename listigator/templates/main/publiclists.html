@@ -15,7 +15,7 @@
         {% for list in lists %}
             <tr class='p-3'>
                 <td class='name'><a href="/list/{{ list.id }}">{{ list.title }}</a></td>
-                <td class='user'>{{ list.user.username }}</td>
+                <td class='user'><a href="/user/{{ list.user_id }}">{{ list.user.username }}</a></td>
             </tr>
         {% endfor %}
     </tbody>

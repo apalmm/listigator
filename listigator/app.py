@@ -107,4 +107,11 @@ def list(list_id):
     title = list_to_show.title
     return render_template('main/list.html', lawyers = lawyers, title=title)
 
+@main.route('/user/<int:user_id>')
+@login_required
+def user(user_id):
+    user_id = session.get('user_id')
+    public_lists = List.query.filter_by(public=True).join(User, List.user_id == User.id).all()
+    return render_template('main/user.html', lists=public_lists)
+
         
