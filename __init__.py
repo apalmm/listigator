@@ -1,6 +1,6 @@
 from flask import Flask   
 
-def up_app():
+def create_app():
     app = Flask(__name__)
     app.config.from_mapping(SECRET_KEY='dev', SQLALCHEMY_DATABASE_URI='sqlite:///listigator.sqlite3')
     # configure the SQLite database, relative to the app instance folder

@@ -1,9 +1,8 @@
 from flask import render_template, request, session, redirect, url_for, make_response
+from flask import Blueprint
 from models import User, List, Lawyer
 from database import db, get_lawyers
-from flask import Blueprint
 from auth import login_required
-
 from constants import field_options
 
 # create the app
