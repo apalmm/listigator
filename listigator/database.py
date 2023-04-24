@@ -6,9 +6,9 @@ from sqlite3 import Row, connect, DatabaseError
 # create the extension
 db = SQLAlchemy()
 
-DB_URL = "file:WALawyers.sqlite?mode=ro"
+# DB_URL = "file:WAlawyers.sqlite?mode=ro"
 
-def query_database(query, mapping=None, many=True):
+def query_database(query, DB_URL, mapping=None, many=True, ):
     """Query the database with the given query and mapping
     Args:
         query (str): query string with named placeholders
@@ -28,9 +28,14 @@ def query_database(query, mapping=None, many=True):
 
 # PUBLIC INTERFACE
 
-def get_lawyers(name, city, phone, field, probono):
+def get_lawyers(name, city, phone, field, state, probono=False):
     query = "SELECT * FROM Lawyer INNER JOIN Field ON Field.LicenseNumber = Lawyer.LicenseNumber"
     
+    if(state == "Washington"):
+        DB_URL = "file:WAlawyers.sqlite?mode=ro"
+    if(state == "FL"):
+        DB_URL = "file:FLlawyers.sqlite?mode=ro"
+
     parameters = {}
     conditions = []
 
@@ -55,8 +60,8 @@ def get_lawyers(name, city, phone, field, probono):
         
     query += " LIMIT 250 "
         
-    print(query, parameters)
+    print(query, parameters, state)
         
-    lawyers = query_database(query, parameters)
+    lawyers = query_database(query, DB_URL, parameters )
     
     return lawyers

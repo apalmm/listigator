@@ -1,3 +1,5 @@
+"""Scrapes active lawyer contact info from the bar website for lawyers in fields:
+    Juvenile, Guardianships, Civil+Rights, Criminal, Human+Rights, Immigration-Naturaliza, Indian """
 from bs4 import BeautifulSoup
 import requests
 import time
@@ -13,6 +15,9 @@ def verify(td):
 
 def main():
     DATABASE_URL = './FLLawyers.sqlite'
+
+    #set up sql below
+
     # CREATE TABLE "Field" (
     # 	"Field"	TEXT NOT NULL,
     # 	"LicenseNumber"	INTEGER NOT NULL,
@@ -55,16 +60,14 @@ def main():
                     URLi = URL + str(i) + "&pageSize=50"#adds actual page we check
                     page = requests.get(URLi)
                     soup = BeautifulSoup(page.content, "html.parser")
-                    table_rows = soup.find_all('li', class_ = "profile-compact")
-                    # print(table_rows)
+                    table_rows = soup.find_all('li', class_ = "profile-compact") #profile-compact holds each person's info
                     for tr in table_rows:
-                        # print(tr)
                         try:
-                            name = tr.find('p', class_ = "profile-name").text
-                            barid = tr.find('p', class_ = "profile-bar-number").find('span').text[1:]
-                            contact = tr.find('div', class_ = "profile-contact").find_all('p')
-                            city = str(contact[0]).split("<br/>")[-1].split(',')[0]
-                            phone = contact[1].find('a').text
+                            name = tr.find('p', class_ = "profile-name").text  #grab name text
+                            barid = tr.find('p', class_ = "profile-bar-number").find('span').text[1:] #cut the # and grab id
+                            contact = tr.find('div', class_ = "profile-contact").find_all('p') #city and phone are in contact
+                            city = str(contact[0]).split("<br/>")[-1].split(',')[0] #city is after the last <br/> and before the comma
+                            phone = contact[1].find('a').text #grab first phone contact
                             try: 
                                 stmt_str = "INSERT INTO Lawyer (LicenseNumber, Name, City, Status, Phone) \
                                     VALUES (:id, :name, :city, :status, :phone)"
@@ -73,20 +76,17 @@ def main():
                                                         "city": city,
                                                         "status":'Active',
                                                         "phone": phone})
-                                # cursor.fetchall()
                             except IntegrityError:
                                 print("Repeat")
                                 print(name)
                                 print(barid)
+                            #add field they operate in, determined by search/loop
                             stmt_str = "INSERT INTO Field (Field, LicenseNumber) \
                                         VALUES (:field, :id)"
                             cursor.execute(stmt_str, {"field": field[1],
                                                     "id": int(barid)})
                         except:
                             print(tr)
-                        # print(phone)
-                        # td = tr.find_all('td')
-                        # if verify(td):
                         
 
 if __name__ == '__main__':

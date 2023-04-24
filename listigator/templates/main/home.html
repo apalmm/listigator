@@ -2,20 +2,13 @@
 {% block title %}Listigator{% endblock %}
 
 {% block main %}
-<div class="d-flex flex-row bd-highlight">
-  <div class="p-2 bd-highlight">
-    <h1>Washington</h1>
-  </div>
-  <div class="p-2 bd-highlight">
-    <div class="dropdown">
-      <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-        Select a State
-      </button>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">Washington</a></li>
-        <li><a class="dropdown-item" href="#">Florida</a></li>
-      </ul>
-    </div>
+<div class="row">
+  <div class='text-center align-middle justify-content-center'>
+    <!-- <h1 class='p-3 border-bottom'>Washington</h1> -->
+    <select id="state" class="form-select form-select-lg mb-5 align-self-center">
+      <option selected>Washington</option>
+      <option value="FL">Florida</option>
+    </select>
   </div>
 </div>
 <div class='row'>

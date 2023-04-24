@@ -25,14 +25,18 @@ def results():
     city = request.args.get('city')
     phone = request.args.get('phone')
     field = request.args.get('field')
-    probono = request.form.get('status')
+    state = request.args.get('state')
+    pb = request.args.get('pb')
     
-    print(name, city, phone, field, probono)
+    print(name, city, phone, field, pb)
     
     if name == "" and city == "" and phone == "" and field == "":
         html = ""
     else:
-        lawyers = get_lawyers(name, city, phone, field, probono)
+        if(pb == "true"):
+            lawyers = get_lawyers(name, city, phone, field, state, probono= True)
+        else:
+            lawyers = get_lawyers(name, city, phone, field, state, probono = False)
         html = render_template('main/results.html', lawyers=lawyers)
 
     return make_response(html)
