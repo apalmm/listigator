@@ -5,11 +5,7 @@ module that runs the server hosting the Flask application
 import sys
 import argparse
 
-<<<<<<< HEAD
 from listigator.__init__ import create_app
-=======
-from __init__ import create_app
->>>>>>> main
 
 app = create_app()
 
