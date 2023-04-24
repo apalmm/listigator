@@ -25,13 +25,14 @@ def results():
     city = request.args.get('city')
     phone = request.args.get('phone')
     field = request.args.get('field')
+    state = request.args.get('state')
     
     print(name, city, phone, field)
     
     if name == "" and city == "" and phone == "":
         html = ""
     else:
-        lawyers = get_lawyers(name, city, phone, field)
+        lawyers = get_lawyers(name, city, phone, field, state)
         html = render_template('main/results.html', lawyers=lawyers)
 
     return make_response(html)
