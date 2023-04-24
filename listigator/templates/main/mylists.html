@@ -22,15 +22,11 @@
                     {% else %}
                     <td style="color: red">Private</td>
                     {% endif %}
-                    <td class='pr-3' style="max-width: 60px">
+                    <td style="max-width: 60px">
                         <form class=method="GET" action="/delete/{{ list.id }}">
                             <input class="float-right btn btn-danger" type="submit" value="Delete">
                         </form>
                     </td>
-                </tr>
-                    
-                <tr class='p-3'>
-                    
                 </tr>
             {% endfor %}
         </tbody>

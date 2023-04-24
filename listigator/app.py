@@ -37,6 +37,18 @@ def results():
 
     return make_response(html)
 
+@main.route('/searchList', methods=["POST"])
+def listSearch():
+    if request.method == "POST":
+        listname = request.form.get('searchTitle')
+
+        if listname is not '':
+            queryname = "%" + listname + "%"
+            lists = db.session.query(List).filter(List.title.like(queryname), List.public==True)
+            html = render_template('main/publiclists.html', lists=lists, querying=True)
+
+        return make_response(html)
+
 @main.route('/create', methods=['POST'])
 @login_required
 def create():
@@ -86,7 +98,7 @@ def mylists():
 @login_required
 def publiclists():
     public_lists = List.query.filter_by(public=True).join(User, List.user_id == User.id).all()
-    return render_template('main/publiclists.html', lists=public_lists)
+    return render_template('main/publiclists.html', lists=public_lists, querying=False)
 
 @main.route('/delete/<int:list_id>')
 @login_required

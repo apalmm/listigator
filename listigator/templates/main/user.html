@@ -2,26 +2,28 @@
 {% block title %}{{ lists[0].user.username}}'s Lists{% endblock %}
 
 {% block main %}
-<h1>{{ lists[0].user.username}}'s Lists</h1>
+<h1 class="p-3">{{ lists[0].user.username}}'s Lists</h1>
 
 {% if lists %}
-<table class='table ph-3 bg-light table-striped'>
-    <thead>
-        <tr>
-            <th scope="col">List Name</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for list in lists %}
-            <tr class='p-3'>
-                {% if list.public %}
-                    <td class='name'><a href="/list/{{ list.id }}">{{ list.title }}</a></td>
-                {% else %}
-                {% endif %}
+<div class="container-fluid">
+    <table class='table ph-3 bg-light table-striped'>
+        <thead>
+            <tr>
+                <th scope="col">List Name</th>
             </tr>
-        {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            {% for list in lists %}
+                <tr class='p-3'>
+                    {% if list.public %}
+                        <td class='name'><a href="/list/{{ list.id }}">{{ list.title }}</a></td>
+                    {% else %}
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% else %}
     <p>This user has no lists yet.</p>
 {% endif %}

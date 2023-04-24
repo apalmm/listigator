@@ -2,6 +2,19 @@ let list_data = [[]];
 
 function updateInput()
 {
+    // document.getElementById('submit-btn').addEventListener('click', () => {
+    //     let listname = $("#searchTitle").val();
+
+    //     //encodeURIComponent searchPrefix
+    
+    //     let url = "/searchList?listname=" + listname; //add on to flash route the prefix (aka whatever is in the search Prefix)
+    
+    //     request = $.ajax({
+    //         type: "GET", //get request
+    //         url: url,
+    //     });
+    // });
+
     let list_div = document.getElementById('list-content');
 
     $("#name").on("keyup", updateResults);
