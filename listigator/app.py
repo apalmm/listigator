@@ -49,6 +49,7 @@ def listSearch():
         if listname is not '':
             queryname = "%" + listname + "%"
             lists = db.session.query(List).filter(List.title.like(queryname), List.public==True)
+
             html = render_template('main/publiclists.html', lists=lists, querying=True)
 
         return make_response(html)
