@@ -2,12 +2,26 @@ let list_data = [[]];
 
 function updateInput()
 {
+    // document.getElementById('submit-btn').addEventListener('click', () => {
+    //     let listname = $("#searchTitle").val();
+
+    //     //encodeURIComponent searchPrefix
+    
+    //     let url = "/searchList?listname=" + listname; //add on to flash route the prefix (aka whatever is in the search Prefix)
+    
+    //     request = $.ajax({
+    //         type: "GET", //get request
+    //         url: url,
+    //     });
+    // });
+
     let list_div = document.getElementById('list-content');
 
     $("#name").on("keyup", updateResults);
     $("#city").on("keyup", updateResults);
     $("#field").on("change", updateResults);
     $("#phone").on("keyup", updateResults);
+    $("#status").on("change", updateResults);
 
     document.getElementById('new-list-btn').addEventListener('click', () => {
         if (list_div.style.display === 'none') {
@@ -19,10 +33,12 @@ function updateInput()
 
     document.getElementById('create-list-btn').addEventListener('click', () => {
         const title = document.getElementById('list-title').value;
+        const is_public = document.getElementById('public').checked
         if (list_data.length > 0 && title) {
             //give our list a title
             list_data.push(title)
-            
+            list_data.push(is_public)
+
             let url = "/create";
             request = $.ajax({
                 type: "POST",
@@ -64,8 +80,9 @@ function setUpTable()
         var field = parent.children(".field").text();
         var phone = parent.children(".phone").text();
         var license = parent.children(".license-no").text();
+        var status = parent.children(".status").text()
 
-        const vals = [name, city, field, phone, license];
+        const vals = [name, city, field, phone, license, status];
 
         const obj = {
             name: name,
@@ -73,6 +90,7 @@ function setUpTable()
             field: field,
             phone: phone,
             license: license,
+            status: status,
         }
 
         const tr = document.createElement('tr');
@@ -96,6 +114,7 @@ function updateResults()
     let city = $("#city").val();
     let phone = $("#phone").val();
     let field = $("#field").val();
+    let status= $("#status").val();
 
     if (field == '--Any--') {
         field = ''
@@ -103,7 +122,7 @@ function updateResults()
 
     //encodeURIComponent searchPrefix
 
-    let url = "/search?name=" + name + "&" + "city=" + city + "&" + "phone=" + phone + "&" + "field=" + field; //add on to flash route the prefix (aka whatever is in the search Prefix)
+    let url = "/search?name=" + name + "&" + "city=" + city + "&" + "phone=" + phone + "&" + "field=" + field  + "&" + "status="; //add on to flash route the prefix (aka whatever is in the search Prefix)
 
     request = $.ajax({
         type: "GET", //get request
@@ -114,6 +133,7 @@ function updateResults()
         }
     });
 }
+
 
 function setup()
 {

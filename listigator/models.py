@@ -55,6 +55,8 @@ class List(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),
         nullable=False)
     
+    public = db.Column(db.Boolean, nullable=False, default=False)
+    
     title = db.Column(db.String(50), nullable=False)
     lawyers = db.relationship('Lawyer', secondary=list_lawyers, lazy='subquery',
         backref=db.backref('lists', lazy=True))

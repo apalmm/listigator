@@ -22,11 +22,14 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav navbar-left me-auto mb-2 mb-lg-0">
             <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{{url_for('main.publiclists')}}">All Lists</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="{{url_for('main.mylists')}}">My Lists</a>
             </li>
           </ul>
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search for a state" aria-label="Search">
+          <form id="search" class="d-flex" role="search" method="post" action="{{url_for('main.listSearch')}}">
+            <input name="searchTitle" class="form-control me-2" type="search" placeholder="Search for a list" aria-label="Search" required>
             <button class="btn btn-outline-success" type="submit">Search</button>
           </form>
         </div>

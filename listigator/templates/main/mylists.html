@@ -1,4 +1,39 @@
 {% extends 'main/layout.html' %}
 {% block title %}My Lists{% endblock %}
 
-<h1>My Lists</h1>
+{% block main %}
+<h1 class='p-3'>My Lists</h1>
+
+{% if lists %}
+<div class="container-fluid">
+    <table class='table ph-3 bg-light table-striped'>
+        <thead>
+            <tr>
+                <th scope="col">List Name</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for list in lists %}
+                <tr class='align-middle me-auto p-3'>
+                    <td class='name'><a href="/list/{{ list.id }}">{{ list.title }}</a></td>
+                    {% if list.public %}
+                    <td style="color: green">Public</td>
+                    {% else %}
+                    <td style="color: red">Private</td>
+                    {% endif %}
+                    <td style="max-width: 60px">
+                        <form class=method="GET" action="/delete/{{ list.id }}">
+                            <input class="float-right btn btn-danger" type="submit" value="Delete">
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+    <h3 class="p-3 text-danger">You have no lists yet.</h3>
+{% endif %}
+
+{% endblock %}
