@@ -1,3 +1,5 @@
+"""Scrapes active lawyer contact info from the bar website for lawyers in fields:
+Juvenile, Guardianships, Cannabis, Civil+Rights, Criminal, Human+Rights, Immigration-Naturaliza, Indian, LGBTQ """
 from bs4 import BeautifulSoup
 import requests
 
@@ -12,6 +14,8 @@ def verify(td):
 
 def main():
     DATABASE_URL = './WALawyers.sqlite'
+    #setup sql below
+
     # CREATE TABLE "Field" (
     # 	"Field"	TEXT NOT NULL,
     # 	"LicenseNumber"	INTEGER NOT NULL,
@@ -31,14 +35,11 @@ def main():
     with connect(DATABASE_URL, isolation_level=None,uri=True) as connection:
         with closing(connection.cursor()) as cursor:
             for field in ["Juvenile", "Guardianships", "Cannabis", "Civil+Rights", "Criminal", "Human+Rights", "Immigration-Naturaliza", "Indian", "LGBTQ"]:
-            # field = "Civil+Rights" #change this for different practice fields u want to add; don't add same one twice (causes problems - too lazy to fix rn)
-            #["Juvenile", "Guardianships", "Cannabis", "Civil+Rights"]
-            # ["Juvenile", "Guardianships", "Cannabis", "Civil+Rights", "Criminal", "Disability", "Employment", "Family" ,"Foreclosure", "Health", "Housing", "Human+Rights", "Immigration-Naturaliza", "Indian", "LGBTQ"]
                 URL = "https://www.mywsba.org/PersonifyEbusiness/LegalDirectory.aspx?ShowSearchResults=TRUE&EligibleToPractice=Y&AreaOfPractice="
-                URL += field
+                URL += field #build url by field of lawyer
                 page = requests.get(URL)
                 soup = BeautifulSoup(page.content, "html.parser")
-                results = int((soup.find('span', class_ = "results-count").text).split()[0]) 
+                results = int((soup.find('span', class_ = "results-count").text).split()[0]) #get results so we know how many pages
                 pages = (results - 1) // 20 
                 URL += "&Page="
                 for i in range(0, pages + 1):
@@ -48,7 +49,7 @@ def main():
                     table_rows = soup.table.find_all('tr', class_ = "grid-row")
 
                     for tr in table_rows:
-                        td = tr.find_all('td')
+                        td = tr.find_all('td') #table storage so find all td entries in a row and pull what we need
                         if verify(td):
                             try: 
                                 stmt_str = "INSERT INTO Lawyer (LicenseNumber, Name, City, Status, Phone) \
@@ -58,10 +59,10 @@ def main():
                                                         "city": td[3].text,
                                                         "status":td[4].text,
                                                         "phone": td[5].text})
-                                # cursor.fetchall()
                             except IntegrityError:
                                 print("Repeat")
                                 print(td)
+                            #add field to lawyer from search param.
                             stmt_str = "INSERT INTO Field (Field, LicenseNumber) \
                                         VALUES (:field, :id)"
                             cursor.execute(stmt_str, {"field": field,

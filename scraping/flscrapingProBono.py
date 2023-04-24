@@ -1,3 +1,4 @@
+"""Adds pro bono lawyer classification to probono FL Lawyers"""
 from bs4 import BeautifulSoup
 import requests
 import time
@@ -13,27 +14,13 @@ def verify(td):
 
 def main():
     DATABASE_URL = './FLLawyers.sqlite'
-    # CREATE TABLE "Field" (
-    # 	"Field"	TEXT NOT NULL,
-    # 	"LicenseNumber"	INTEGER NOT NULL,
-    # 	PRIMARY KEY("Field","LicenseNumber")
-    # )
-
-    # CREATE TABLE "Lawyer" (
-    # 	"LicenseNumber"	INTEGER NOT NULL UNIQUE,
-    # 	"Name"	TEXT NOT NULL,
-    # 	"City"	TEXT NOT NULL,
-    # 	"Status"	TEXT NOT NULL,
-    # 	"Phone"	TEXT NOT NULL,
-    # 	PRIMARY KEY("LicenseNumber")
-    # )
 
 
     with connect(DATABASE_URL, isolation_level=None,uri=True) as connection:
         with closing(connection.cursor()) as cursor:
-            #For the loop, have to run not as loop but one by one bc too many requests; can fix later not critical
+            #For the loop, have to run not as loop but one by one bc too many requests
             for field in [("C16","Criminal",5), ("I01","Immigration-Naturaliza",3)]:#only included ones with lawyers; dont check if none in code so feed "safe" topics for now
-                URL = "https://www.floridabar.org/directories/find-mbr/?sdx=N&eligible=Y&deceased=N&pracAreas=" #J02&pageNumber=1"
+                URL = "https://www.floridabar.org/directories/find-mbr/?sdx=N&eligible=Y&deceased=N&pracAreas=" #building out url w search par for scraping
                 URL += field[0]
                 URL += "&services=PBS"
                 URL += "&pageNumber="
@@ -41,31 +28,29 @@ def main():
                 soup = BeautifulSoup(page.content, "html.parser")
                 results = 10
                 try:
+                    #getting number of results found to determine pages to scrape
                     results = int(soup.find('p', class_ = "result-message").text.split()[field[2]].replace(',','')) #if only one result do 3 instead of 5
                 except:
                     print(soup.find('p', class_ = "result-message").text.split())
                     print(field)
                     print(URL)
-                    time.sleep(150) #cheap fix nvm doesnt work
+                    time.sleep(150)
                     results = int(soup.find('p', class_ = "result-message").text.split()[field[2]].replace(',',''))
                 pages = (results - 1) // 50
                 print(results) 
                 print(pages)
-                # URL += "&pageNumber="
                 for i in range(1, pages + 2):
-                    URLi = URL + str(i) + "&pageSize=50"#adds actual page we check
+                    URLi = URL + str(i) + "&pageSize=50"#adds actual page we check on
                     page = requests.get(URLi)
                     soup = BeautifulSoup(page.content, "html.parser")
-                    table_rows = soup.find_all('li', class_ = "profile-compact")
-                    # print(table_rows)
+                    table_rows = soup.find_all('li', class_ = "profile-compact") #profile-compact holds each person's info
                     for tr in table_rows:
-                        # print(tr)
                         try:
-                            name = tr.find('p', class_ = "profile-name").text
-                            barid = tr.find('p', class_ = "profile-bar-number").find('span').text[1:]
-                            contact = tr.find('div', class_ = "profile-contact").find_all('p')
-                            city = str(contact[0]).split("<br/>")[-1].split(',')[0]
-                            phone = contact[1].find('a').text
+                            name = tr.find('p', class_ = "profile-name").text #grab name text
+                            barid = tr.find('p', class_ = "profile-bar-number").find('span').text[1:] #cut the # and grab id
+                            contact = tr.find('div', class_ = "profile-contact").find_all('p') #city and phone are in contact
+                            city = str(contact[0]).split("<br/>")[-1].split(',')[0] #city is after the last <br/> and before the comma
+                            phone = contact[1].find('a').text #grab first phone contact
                             try: 
                                 stmt_str = "DELETE FROM Lawyer WHERE Lawyer.LicenseNumber = :id"
                                 cursor.execute(stmt_str, {"id": int(barid)})
@@ -76,16 +61,17 @@ def main():
                                                         "city": city,
                                                         "status":'Pro Bono',
                                                         "phone": phone})
-                                # cursor.fetchall()
                             except IntegrityError:
-                                print("Delete fail ?")
                                 print(name)
                                 print(barid)
+                            #add back field they operate in, determined by search/loop
+                            if(field[2]==5):
+                                stmt_str = "INSERT INTO Field (Field, LicenseNumber) \
+                                            VALUES (:field, :id)"
+                                cursor.execute(stmt_str, {"field": field[1],
+                                                        "id": int(barid)})
                         except:
                             print(tr)
-                        # print(phone)
-                        # td = tr.find_all('td')
-                        # if verify(td):
                         
 
 if __name__ == '__main__':
