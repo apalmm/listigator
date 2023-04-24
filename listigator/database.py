@@ -1,5 +1,5 @@
-from flask_sqlalchemy import SQLAlchemy
 import sys
+from flask_sqlalchemy import SQLAlchemy
 from contextlib import closing
 from sqlite3 import Row, connect, DatabaseError
 

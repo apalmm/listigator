@@ -118,6 +118,8 @@ function updateResults()
     let state = $("#state").val();
     let pb = $("#probono").is(':checked');
 
+    console.log(pb)
+
     if (field == '--Any--') {
         field = ''
     }

@@ -59,7 +59,6 @@ def create():
     content_type = request.headers.get('Content-Type')
     if (content_type == 'application/json'):
         data = request.json
-        print(data)
         lawyers = data[0]
 
         title = data[1]
