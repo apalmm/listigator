@@ -9,6 +9,7 @@ function updateInput()
     $("#field").on("change", updateResults);
     $("#phone").on("keyup", updateResults);
     $("#state").on("change", updateResults);
+    $("#probono").on("change", updateResults);
 
     document.getElementById('new-list-btn').addEventListener('click', () => {
         if (list_div.style.display === 'none') {
@@ -98,6 +99,7 @@ function updateResults()
     let phone = $("#phone").val();
     let field = $("#field").val();
     let state = $("#state").val();
+    let pb = $("#probono").is(':checked');
 
     if (field == '--Any--') {
         field = ''
@@ -105,7 +107,7 @@ function updateResults()
 
     //encodeURIComponent searchPrefix
 
-    let url = "/search?name=" + name + "&" + "city=" + city + "&" + "phone=" + phone + "&" + "field=" + field + "&state=" + state; //add on to flash route the prefix (aka whatever is in the search Prefix)
+    let url = "/search?name=" + name + "&" + "city=" + city + "&" + "phone=" + phone + "&" + "field=" + field + "&state=" + state + "&pb=" + pb; //add on to flash route the prefix (aka whatever is in the search Prefix)
 
     request = $.ajax({
         type: "GET", //get request
